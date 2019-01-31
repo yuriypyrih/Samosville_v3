@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
+import engine.PlayerInput.Move;
+
 public class Game extends Canvas implements Runnable{
 
 	private static final long serialVersionUID = -1442798787354930462L;
@@ -24,7 +26,7 @@ public class Game extends Canvas implements Runnable{
 	
 	
 	
-	public STATE gameState = STATE.Menu;
+	public static STATE  gameState = STATE.Menu;
 	
 	//Contructor fot the Game class
 	public Game() {
@@ -35,14 +37,19 @@ public class Game extends Canvas implements Runnable{
 		hud = new HUD();
 		menu = new Menu(this,handler, hud);
 		BG_manager = new Background_manager(this);
-		world = new World();
 		this.addKeyListener(new KeyInput(handler,this));
 		this.addMouseListener(menu);
 		this.addMouseMotionListener(menu);
 		
+		PlayerInput player = new PlayerInput();
+		PlayerInput.Move move = player.new Move();
+		this.addMouseMotionListener(move);
+		
+		PlayerInput.Click click = player.new Click();
+		this.addMouseListener(click);
 	
 		
-		
+		world = new World(player);
 		
 	
 		
