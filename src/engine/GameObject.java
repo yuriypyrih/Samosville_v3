@@ -10,13 +10,14 @@ import java.awt.Rectangle;
 
 public abstract class GameObject {
 	
-	protected float  x, y;
+	protected int  x, y;
 	protected ID id;
-	protected float  velX, velY;
+
+	
 	
 	/*Contructor for GameObject , x and y are the coordinates of where it should be placed 
 	 * and id indicates what type of mob this object is */
-	public GameObject(float  x, float  y, ID id) {
+	public GameObject(int  x, int  y, ID id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
@@ -24,20 +25,20 @@ public abstract class GameObject {
 	
 	public abstract void tick();
 	public abstract void render(Graphics g);
-	public abstract Rectangle getBounds();		//Hitbox
+	
 	
 	
 	/*Some basics methods to be inherited*/
-	public void setX(float x) {
+	public void setX(int x) {
 		this.x = x;
 	}
-	public void setY(float y) {
+	public void setY(int y) {
 		this.y = y;
 	}
-	public float getX() {
+	public int getX() {
 		return x;
 	}
-	public float getY() {
+	public int getY() {
 		return y;
 	}
 	public void setId(ID id) {
@@ -46,18 +47,7 @@ public abstract class GameObject {
 	public ID getId() {
 		return id;
 	}
-	public void setVelX(float velX) {
-		this.velX = velX;
-	}
-	public float getVelX() {
-		return velX;
-	}
-	public void setVelY(float velY) {
-		this.velY = velY;
-	}
-	public float getVelY() {
-		return velY;
-	}
+	
 	
 	
 	

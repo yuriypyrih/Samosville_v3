@@ -41,7 +41,7 @@ public class Game extends Canvas implements Runnable{
 		this.addMouseListener(menu);
 		this.addMouseMotionListener(menu);
 		
-		PlayerInput player = new PlayerInput();
+		PlayerInput player = new PlayerInput(handler);
 		PlayerInput.Move move = player.new Move();
 		this.addMouseMotionListener(move);
 		
@@ -116,9 +116,9 @@ public class Game extends Canvas implements Runnable{
 		//update each bevarior per frame
 	
 		if(gameState== STATE.Game) {
-			handler.tick();
-			hud.tick();
 			
+			hud.tick();
+			handler.tick();
 			
 				
 			
@@ -150,6 +150,7 @@ public class Game extends Canvas implements Runnable{
 		if(gameState == STATE.Game) {
 			hud.render(g);
 			world.render(g);
+			handler.render(g);
 		}else if(gameState == STATE.Menu ) {
 			
 			menu.render(g);

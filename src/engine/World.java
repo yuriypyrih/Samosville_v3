@@ -12,7 +12,7 @@ import java.io.File;
 public class World extends Canvas  {
 	
 	private PlayerInput player;
-	private char[][] cworld ;
+	public static char[][] cworld ;
    
     private Image  img_grass = new ImageIcon("res/Grass50.png").getImage();
     private Image  img_landscape = new ImageIcon("res/mountain_landscape.png").getImage();
@@ -22,6 +22,7 @@ public class World extends Canvas  {
     private Image enemy_base_img = new ImageIcon("res/enemy_base150.png").getImage();
     private Image base_img = new ImageIcon("res/base150.png").getImage();
     private Image selected_filter_img = new ImageIcon("res/selected_filter.png").getImage();
+    private Image worker_select_filter_img = new ImageIcon("res/worker_select_filter.png").getImage();
     
     
  
@@ -50,16 +51,10 @@ public class World extends Canvas  {
     		};
         
     }
-      
-
-
-  
-
     
-
-   
-
-
+    public static void changeTile(int x, int y, char Type) {
+    	cworld[y][x] = Type;
+    }
     
 
     public void render(Graphics g) {
@@ -131,7 +126,14 @@ public class World extends Canvas  {
                 {
                 	if(player.getMY() >=  y * 50 && player.getMY() < y * 50 + 50)
                 	{
-                		g.drawImage(selected_filter_img,x * 50, y * 50, null);   
+                		if(HUD.SELECT_RESOURCE == true) {
+                			g.drawImage(worker_select_filter_img,x * 50, y * 50, null); 
+                		}
+                		else {
+                			g.drawImage(selected_filter_img,x * 50, y * 50, null);   
+                			
+                		}
+                		
                 	}
                 }
          
