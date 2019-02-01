@@ -9,6 +9,7 @@ import engine.GameObject;
 import engine.HUD;
 import engine.Handler;
 import engine.ID;
+import engine.PopUpEffect;
 import engine.World;
 
 
@@ -55,6 +56,7 @@ public class Ally_Warrior extends GameObject{
 			if ( x == sentX && y == sentY) {
 				
 				HUD.enemy_BASE -= 5;
+				handler.addObject(new PopUpEffect(20,100,0,handler));
 				handler.removeObject(this);
 			}
 			else if(World.cworld[y][x-1] == 'P') {

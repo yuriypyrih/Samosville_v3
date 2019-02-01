@@ -9,6 +9,7 @@ import engine.GameObject;
 import engine.HUD;
 import engine.Handler;
 import engine.ID;
+import engine.PopUpEffect;
 import engine.World;
 
 
@@ -54,6 +55,7 @@ public class Enemy_Warrior extends GameObject{
 			/*HIT YOUR BASE*/
 			if ( x == sentX && y == sentY) {
 				
+				handler.addObject(new PopUpEffect(1000,550,0,handler));
 				HUD.your_BASE -= 5;
 				handler.removeObject(this);
 			}

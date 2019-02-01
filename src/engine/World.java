@@ -24,8 +24,16 @@ public class World extends Canvas  {
     private Image  cow_img = new ImageIcon("res/cow50.png").getImage();
 
     private Image img_wall = new ImageIcon("res/Wall50.png").getImage();
-    private Image enemy_base_img = new ImageIcon("res/enemy_base150.png").getImage();
-    private Image base_img = new ImageIcon("res/base150.png").getImage();
+    private Image enemy_base1_img = new ImageIcon("res/enemy_base150.png").getImage();
+    private Image enemy_base2_img = new ImageIcon("res/enemy_caste150_2.png").getImage();
+    private Image enemy_base3_img = new ImageIcon("res/enemy_castle150_3.png").getImage();
+    private Image enemy_base_img = enemy_base1_img;
+    
+    private Image your_base1_img = new ImageIcon("res/base150.png").getImage();
+    private Image your_base2_img = new ImageIcon("res/your_castle150_2.png").getImage();
+    private Image your_base3_img = new ImageIcon("res/your_castle150_3.png").getImage();
+    private Image your_base_img = your_base1_img;
+    
     private Image selected_filter_img = new ImageIcon("res/selected_filter.png").getImage();
     private Image on_select_filter_img = new ImageIcon("res/on_select_filter.png").getImage();
     private Image off_select_filter_img = new ImageIcon("res/off_select_filter.png").getImage();
@@ -66,11 +74,34 @@ public class World extends Canvas  {
     }
     public void tick() {
     	
-    	if(HUD.secondsPassed - startTimer >= 15)
+    	/*TIMER TICK*/
+    	if(HUD.secondsPassed - startTimer >= 10)
 		{
     		handler.addObject( new Enemy_Warrior( 3, 3, ID.Warrior, handler, 20, 12));
     		startTimer = HUD.secondsPassed;
 		}
+    	
+    	/*Your CASTLE APPEARANCE*/
+    	if(HUD.your_BASE > 50) {
+    		your_base_img = your_base1_img;
+    	}
+    	else if(HUD.your_BASE > 10) {
+    		your_base_img = your_base2_img;
+    	}
+    	else {
+    		your_base_img = your_base3_img;
+    	}
+    	
+    	/*Enemy CASTLE APPEARANCE*/
+    	if(HUD.enemy_BASE > 50) {
+    		enemy_base_img = enemy_base1_img;
+    	}
+    	else if(HUD.your_BASE > 10) {
+    		enemy_base_img = enemy_base2_img;
+    	}
+    	else {
+    		enemy_base_img = enemy_base3_img;
+    	}
     	
     	
    	
@@ -168,7 +199,7 @@ public class World extends Canvas  {
             }//end of inner for()
         }//end of outer for()
        	g.drawImage(enemy_base_img, 0, 50, null); 
-       	g.drawImage(base_img, 1050, 500, null); 
+       	g.drawImage(your_base_img, 1050, 500, null); 
        	
     }//end of render()
 

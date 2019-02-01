@@ -116,7 +116,10 @@ public class HUD {
 		graphics2.setColor(Color.RED);
 				
 		//SENT WORKER BUTTON
-		if(workers>0) {
+		if(SELECT_RESOURCE == true) {
+			graphics2.setColor(Color.YELLOW);
+		}
+		else if(workers>0) {
 			graphics2.setColor(Color.GREEN);
 		}
 		graphics2.drawRect(795, 754, 390, 41);
