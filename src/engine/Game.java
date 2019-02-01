@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable{
 		this.addMouseListener(click);
 	
 		
-		world = new World(player);
+		world = new World(player, handler);
 		
 	
 		
@@ -117,7 +117,9 @@ public class Game extends Canvas implements Runnable{
 	
 		if(gameState== STATE.Game) {
 			
+			
 			hud.tick();
+			world.tick();
 			handler.tick();
 			
 				

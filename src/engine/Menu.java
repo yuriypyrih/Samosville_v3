@@ -48,6 +48,7 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			if(mouseOver(mx,my,200,400,100,40)) {
 				
 				game.gameState = STATE.Game;
+				hud.reset();
 				//background_img = dodge_menu_img;
 				
 			}
