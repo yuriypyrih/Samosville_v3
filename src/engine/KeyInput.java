@@ -50,7 +50,7 @@ public class KeyInput extends KeyAdapter{
 		}*/
 		
 		if(key == KeyEvent.VK_ESCAPE) {
-		AudioPlayer.getSound("click_menu").play(1f,0.6f);
+		AudioPlayer.getSound("click_menu").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
 		 	if(game.gameState == STATE.Options) {
 				game.gameState = STATE.Menu;
 			}	

@@ -18,7 +18,7 @@ public class HUD {
 	
 	
 
-	private final static int YOUR_BASE = 100;
+	private final static int YOUR_BASE = 5;
 	private final static int ENEMY_BASE = 100;
 	private final static int CREATED_WORKERS = 1;
 	private final static int AVAILABLE_WORKERS = 1;
@@ -40,6 +40,7 @@ public class HUD {
 	
 	private Handler handler;
 	private boolean[] messages = new boolean[20];
+	private boolean game_finished = false; // To check if the game is funished when displaying Victory or Defeat
 	
 	
 	public static boolean SELECT_RESOURCE = false;
@@ -117,6 +118,16 @@ public class HUD {
 	
 	public void tick() {
 		
+		if(your_BASE <= 0 && !game_finished) {
+			AudioPlayer.getSound("defeat").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
+			game_finished = true;
+			Game.gameState = STATE.Defeat;
+		}
+		else if(enemy_BASE <= 0 && !game_finished) {
+			AudioPlayer.getSound("victory").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
+			game_finished = true;
+			Game.gameState = STATE.Victory;
+			}
 		
 		
 	}
@@ -228,6 +239,8 @@ public class HUD {
 		wood = WOOD;                            
 		stone = STONE;                          
 		warrior_spawn_rate = WARRIOR_SPAWN_RATE;
+		
+		game_finished = false;
 		
 		handler.clearGame();
 	}

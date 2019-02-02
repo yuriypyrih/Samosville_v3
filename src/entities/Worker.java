@@ -49,7 +49,7 @@ public class Worker extends GameObject{
 		
 		this.handler = handler;
 		
-		AudioPlayer.getSound("send_worker").play(1f,0.8f);
+		AudioPlayer.getSound("send_worker").play(1f,0.8f * AudioPlayer.sound_solume_multiplier);
 		
 		for(int x_ = 0 ; x_ <= 24 ; x_++) {
 			if(sentX >= x_  * 50 && sentX < x_ * 50 + 50) {

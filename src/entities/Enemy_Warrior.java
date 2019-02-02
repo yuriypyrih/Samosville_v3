@@ -56,7 +56,7 @@ public class Enemy_Warrior extends GameObject{
 			/*HIT YOUR BASE*/
 			if ( x == sentX && y == sentY) {
 				
-				AudioPlayer.getSound("warrior_slash").play(1f,0.6f);
+				AudioPlayer.getSound("warrior_slash").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
 				handler.addObject(new PopUpEffect(1000,550,0,handler));
 				HUD.your_BASE -= 5;
 				handler.removeObject(this);

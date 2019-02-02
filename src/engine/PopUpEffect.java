@@ -68,7 +68,7 @@ public class PopUpEffect extends GameObject{
 		this.y = y;
 		this.whichWarning = 3;
 		
-		AudioPlayer.getSound("pop").play(1f,0.6f);
+		AudioPlayer.getSound("pop").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
 		
 		alpha = 0.06f;
 		effect_img = new ImageIcon("res/" + str_img + ".png").getImage();

@@ -23,6 +23,8 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 	private Image menu_stats_img = new ImageIcon("res/menu_stats.png").getImage();
 	private Image menu_options_img = new ImageIcon("res/menu_options.png").getImage();
 	private Image pause_filter_img = new ImageIcon("res/pause_filter.png").getImage();
+	private Image victory_filter_img = new ImageIcon("res/victory_filter.png").getImage();
+	private Image defeat_filter_img = new ImageIcon("res/defeat_filter.png").getImage();
 	
 	private Image background_img = menu_background_img;
 	
@@ -50,7 +52,7 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			
 			/*PLAY button*/
 			if(mouseOver(mx,my,440,205,320,85)) {
-				AudioPlayer.getSound("click_menu").play(1f,0.6f);
+				AudioPlayer.getSound("click_menu").play(1f,0.6f  * AudioPlayer.sound_solume_multiplier);
 				game.gameState = STATE.Game;
 				hud.reset();
 				//background_img = dodge_menu_img;
@@ -59,13 +61,13 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			
 			/*STATS button*/
 			else if(mouseOver(mx,my,440,305,320,85)) {
-				AudioPlayer.getSound("click_menu").play(1f,0.6f);
+				AudioPlayer.getSound("click_menu").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
 				game.gameState = STATE.Stats;	
 			}
 			
 			/*OPTIONS button*/
 			else if(mouseOver(mx,my,440,408,320,85)) {
-				AudioPlayer.getSound("click_menu").play(1f,0.6f);
+				AudioPlayer.getSound("click_menu").play(1f  ,0.6f * AudioPlayer.sound_solume_multiplier);
 				game.gameState = STATE.Options;
 			}
 			
@@ -74,32 +76,45 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 				System.exit(1);
 			}
 		}
+		else if(game.gameState == STATE.Options) {
+			/*Music Volume button*/
+			if(mouseOver(mx,my,265,305,653,85)) {
+				AudioPlayer.getSound("click_menu").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
+				AudioPlayer.changeMusicVolume();
+			}
+			/*Sound Volume button*/
+			else if(mouseOver(mx,my,265,450,654,85)) {
+				AudioPlayer.getSound("click_menu").play(1f,0.6f* AudioPlayer.sound_solume_multiplier);
+				AudioPlayer.changeSoundVolume();
+			}
+			/*Back button*/
+			else if(mouseOver(mx,my,828,764,322,84)) {
+				AudioPlayer.getSound("click_menu").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
+				Game.gameState = STATE.Menu;
+			}
 			
-		
-			
+		}	
 		else if(game.gameState==STATE.Pause) {
 				
 				/*RESUME button*/
 				if(mouseOver(mx,my,448,255,320,85)) {
-					AudioPlayer.getSound("click_menu").play(1f,0.6f);
+					AudioPlayer.getSound("click_menu").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
 					Game.gameState = STATE.Game;
 				
 				}
 				/*RESET button*/
 				else if(mouseOver(mx,my,448,345,320,85)) {
-					AudioPlayer.getSound("click_menu").play(1f,0.6f);
+					AudioPlayer.getSound("click_menu").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
 					hud.reset();
 					Game.gameState = STATE.Game;
 
 				}
 				/*QUIT button*/
 				else if(mouseOver(mx,my,448,435,320,85)) {
-					AudioPlayer.getSound("click_menu").play(1f,0.6f);
+					AudioPlayer.getSound("click_menu").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
 					Game.gameState = STATE.Menu;
 
 				}
-				
-			
 				
 			
 		}
@@ -144,25 +159,20 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 	
 		else if(game.gameState==STATE.Options) {
 	
-				/*DIFFICULTY button*/
-				if(mouseOver(mx,my,225,120,200,55)) {
-				//	dodge_settings_img = dodge_settings_diff;
-					}
-				/*SOUND button*/
-				else if(mouseOver(mx,my,280,205,70,70)) {
-				//	dodge_settings_img = dodge_settings_sound;
+				/*Music Volume button*/
+				if(mouseOver(mx,my,265,305,653,85)) {
+					hover_button = 1;
 				}
-				/*CONTROLS button*/
-				else if(mouseOver(mx,my,230,300,190,55)) {
-				//	dodge_settings_img = dodge_settings_controls;
+				/*Sound Volume button*/
+				else if(mouseOver(mx,my,265,450,654,85)) {
+					hover_button = 2;
 				}
-				/*EXIT button*/
-				else if(mouseOver(mx,my,482,375,130,55)) {
-				//	dodge_settings_img = dodge_settings_exit;
+				/*Back button*/
+				else if(mouseOver(mx,my,828,764,322,84)) {
+					hover_button = 3;
 				}
-				/*IF NOT THEN THE DEFAULT BACKGROUND*/
 				else {
-				//	dodge_settings_img = dodge_settings_default;
+					hover_button = -1;
 				}
 		}
 	
@@ -266,6 +276,42 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			
 			g.drawImage(menu_options_img,0,0,null);
 			
+			g.setColor(Color.BLACK);
+			Font f = new Font ("Monospaced", Font.BOLD | Font.ITALIC, 48);
+		    g.setFont (f);
+		    
+		    //Music Volume Button
+			g.drawString(AudioPlayer.MusicVolumetoString(),690,375);
+			
+			//Sound Volume Button
+			g.drawString(AudioPlayer.SoundVolumetoString(),690,520);
+			
+			
+			
+			g.setColor(Color.WHITE);
+			if(hover_button == 1) {
+				//Music Volume  BUTTON
+				g.drawRect(265,305,653,85);
+			}
+			else if(hover_button == 2) {
+				//Sound Volume BUTTON
+				g.drawRect(265,450,654,85);
+			}
+			else if(hover_button == 3) {
+				//Back BUTTON
+				g.drawRect(828,764,322,84);
+			}
+			// hover_button == -1
+			else {
+				//Do Nothing, do not highlight anything
+			}
+			
+		}//end of if(Options)
+		else if(game.gameState==STATE.Pause) {
+			
+		g.drawImage(pause_filter_img,0,0,null);
+		
+		
 			if(hover_button == 1) {
 				//RESUME BUTTON
 				g.drawRect(448,255,320,85);
@@ -282,30 +328,15 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			else {
 				//Do Nothing, do not highlight anything
 			}
-			
-		}//end of if(Options)
-		else if(game.gameState==STATE.Pause) {
-			
-		g.drawImage(pause_filter_img,0,0,null);
 		
-		if(hover_button == 1) {
-			//RESUME BUTTON
-			g.drawRect(448,255,320,85);
-		}
-		else if(hover_button == 2) {
-			//RESET BUTTON
-			g.drawRect(448,345,320,85);
-		}
-		else if(hover_button == 3) {
-			//QUIT BUTTON
-			g.drawRect(448,435,320,85);
-		}
-		// hover_button == -1
-		else {
-			//Do Nothing, do not highlight anything
-		}
+		}//end of if(Pause)
 		
-	}//end of if(Pause)
+		else if(game.gameState==STATE.Victory) {
+			g.drawImage(victory_filter_img,0,0,null);
+		}
+		else if(game.gameState==STATE.Defeat) {
+			g.drawImage(defeat_filter_img,0,0,null);
+		}
 		
 	}
 	

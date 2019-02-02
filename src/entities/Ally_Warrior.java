@@ -42,7 +42,7 @@ public class Ally_Warrior extends GameObject{
 		this.sentX = sentX;
 		this.sentY = sentY;
 		
-		AudioPlayer.getSound("warrior_deploy").play(2.0f,0.6f);
+		AudioPlayer.getSound("warrior_deploy").play(1.0f ,0.6f * AudioPlayer.sound_solume_multiplier);
 		
 	}
 	
@@ -56,7 +56,7 @@ public class Ally_Warrior extends GameObject{
 			/*HIT YOUR BASE*/
 			if ( x == sentX && y == sentY) {
 				
-				AudioPlayer.getSound("warrior_slash").play(1f,0.6f);
+				AudioPlayer.getSound("warrior_slash").play(1f ,0.6f* AudioPlayer.sound_solume_multiplier);
 				HUD.enemy_BASE -= 5;
 				handler.addObject(new PopUpEffect(20,100,0,handler));
 				handler.removeObject(this);
