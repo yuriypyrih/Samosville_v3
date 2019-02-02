@@ -42,7 +42,7 @@ public class Ally_Warrior extends GameObject{
 		this.sentX = sentX;
 		this.sentY = sentY;
 		
-		AudioPlayer.getSound("warrior_deploy").play(1f,0.6f);
+		AudioPlayer.getSound("warrior_deploy").play(2.0f,0.6f);
 		
 	}
 	

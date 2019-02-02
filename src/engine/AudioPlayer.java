@@ -30,6 +30,7 @@ public class AudioPlayer {
 			soundMap.put("warrior_deploy", new Sound("res/warrior_deploy_sound.ogg"));
 			soundMap.put("send_worker", new Sound("res/send_worker_sound.ogg"));
 			soundMap.put("create_worker", new Sound("res/create_worker_sound.ogg"));
+			soundMap.put("pop", new Sound("res/pop_sound.ogg"));
 			
 			
 		} catch (SlickException e) {

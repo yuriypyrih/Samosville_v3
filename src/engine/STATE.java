@@ -4,9 +4,10 @@ public enum STATE {
 	Menu,
 	Game,
 	Select,
-	Settings,
+	Stats,
+	Options,
+	Victory,
+	Defeat,
 	
 	Pause,
-
-	End
 }

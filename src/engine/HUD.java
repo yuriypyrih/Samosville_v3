@@ -15,14 +15,31 @@ import javax.swing.ImageIcon;
 
 public class HUD {
 	
-	public static int your_BASE = 100;
-	public static int enemy_BASE = 100;
 	
-	public static int available_workers = 1;
-	public static int created_workers = 1;
-	public static int food = 1;
-	public static int wood = 1;
-	public static int stone = 2;
+	
+
+	private final static int YOUR_BASE = 100;
+	private final static int ENEMY_BASE = 100;
+	private final static int CREATED_WORKERS = 1;
+	private final static int AVAILABLE_WORKERS = 1;
+	private final static int FOOD = 1;
+	private final static int WOOD = 1;
+	private final static int STONE = 2;
+	private final static int WARRIOR_SPAWN_RATE = 20;
+	
+	
+	
+	public static int your_BASE = YOUR_BASE;
+	public static int enemy_BASE = ENEMY_BASE;
+	public static int available_workers = AVAILABLE_WORKERS;
+	public static int created_workers = CREATED_WORKERS;
+	public static int food = FOOD;
+	public static int wood = WOOD;
+	public static int stone = STONE;
+	public static int warrior_spawn_rate = WARRIOR_SPAWN_RATE;
+	
+	private Handler handler;
+	private boolean[] messages = new boolean[20];
 	
 	
 	public static boolean SELECT_RESOURCE = false;
@@ -30,8 +47,13 @@ public class HUD {
 	
 	private Image img_tab =  new ImageIcon("res\\tab.png").getImage();
 	
-	public HUD() {
+	public HUD(Handler handler) {
 		this.start();
+		this.handler = handler;
+		
+		for(int i = 0 ; i < messages.length ; i++) {
+			messages[i] = true;
+		}
 	}
 	
 	
@@ -40,7 +62,9 @@ public class HUD {
 	Timer timer = new Timer();
 	TimerTask task_seconds = new TimerTask() {
 		public void run() {
-			secondsPassed++;
+			if(Game.gameState == STATE.Game) {
+				secondsPassed++;
+			}
 			System.out.println("Seconds passed: " + secondsPassed);
 		}
 	};
@@ -48,6 +72,7 @@ public class HUD {
 	public void start() {
 		//MILISECONDS
 		timer.scheduleAtFixedRate(task_seconds, 1000, 1000);
+		
 	}
 	
 	
@@ -109,7 +134,7 @@ public class HUD {
 		graphics2.setColor(Color.RED);
 		
 		//CREATE WORKER BUTTON
-		if(stone>=1 && food >=2) {
+		if(wood>=1 && food >=2) {
 			graphics2.setColor(Color.GREEN);
 		}
 		graphics2.drawRect(795, 705, 390, 41);
@@ -133,7 +158,7 @@ public class HUD {
 		graphics2.setColor(Color.RED);
 		
 		//REPAIR CASTLE BUTTON
-		if(stone>=5 && wood >=2) {
+		if(stone>=4 && wood >=3) {
 			graphics2.setColor(Color.GREEN);
 		}
 		graphics2.drawRect(677, 708, 107, 138);
@@ -156,11 +181,55 @@ public class HUD {
 		graphics2.setColor(Color.RED);
 		graphics2.drawString("" + enemy_BASE, 527, 808);
 		
+		
+		if(secondsPassed == 2 && messages[0]) {
+			handler.addObject( new PopUpEffect(400,0,"message_1_welcome", handler));
+			messages[0] = false;
+		}
+		else if(secondsPassed == 8 && messages[1]) {
+			handler.addObject( new PopUpEffect(400,0,"message_2_sendworkers", handler));
+			messages[1] = false;
+		}
+		else if(created_workers >= 4 && messages[2]) {
+			handler.addObject( new PopUpEffect(400,0,"message_3_food", handler));
+			messages[2] = false;
+		}
+		else if(enemy_BASE < 100 && messages[3]) {
+			handler.addObject( new PopUpEffect(400,0,"message_4_firsthit", handler));
+			messages[3] = false;
+			warrior_spawn_rate = 18;
+		}
+		else if(enemy_BASE <= 50 && messages[4]) {
+			handler.addObject( new PopUpEffect(400,0,"message_5_below50", handler));
+			messages[4] = false;
+			warrior_spawn_rate = 15;
+		}
+		else if(enemy_BASE <= 10 && messages[5]) {
+			handler.addObject( new PopUpEffect(400,0,"message_6_bellow10", handler));
+			messages[5] = false;
+			warrior_spawn_rate = 8;
+		}
+		
 	}
 	
 	public void reset() {
 		
 		secondsPassed = 0;
+		
+		for(int i = 0 ; i < messages.length ; i++) {
+			messages[i] = true;
+		}
+		
+		your_BASE = YOUR_BASE;  
+		enemy_BASE = ENEMY_BASE;
+		available_workers = AVAILABLE_WORKERS;  
+		created_workers = CREATED_WORKERS;      
+		food = FOOD;                            
+		wood = WOOD;                            
+		stone = STONE;                          
+		warrior_spawn_rate = WARRIOR_SPAWN_RATE;
+		
+		handler.clearGame();
 	}
 	
 	

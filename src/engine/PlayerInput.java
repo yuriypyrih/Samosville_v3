@@ -75,10 +75,10 @@ public  class PlayerInput {
 			if(Game.gameState == STATE.Game) {
 				
 				/*CREATE WORKERS BUTTON*/
-				if(mouseOver(mx,my,795, 705, 390, 41) && HUD.stone >= 1 && HUD.food >=2) {
+				if(mouseOver(mx,my,795, 705, 390, 41) && HUD.wood >= 1 && HUD.food >=2) {
 					AudioPlayer.getSound("create_worker").play(1f,0.6f);
 					HUD.food -= 2;
-					HUD.stone -= 1;
+					HUD.wood -= 1;
 					HUD.available_workers += 1;
 					HUD.created_workers += 1;
 				}
@@ -97,12 +97,12 @@ public  class PlayerInput {
 					
 				}
 				/*REPAIR CASTLE BUTTON*/
-				else if(mouseOver(mx,my,677, 708, 107, 138) && HUD.wood >= 2 && HUD.stone >= 5) {
+				else if(mouseOver(mx,my,677, 708, 107, 138) && HUD.wood >= 3 && HUD.stone >= 4) {
 					
 					AudioPlayer.getSound("repear_castle").play(1f,0.6f);
 					handler.addObject(new PopUpEffect(1000, 550, 1, handler));
-					HUD.wood -= 2;
-					HUD.stone -= 5;
+					HUD.wood -= 3;
+					HUD.stone -= 4;
 					HUD.your_BASE += 20;
 				}
 				

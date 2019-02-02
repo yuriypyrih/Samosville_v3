@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable{
 		//Here we create a Handler object that late will be passed to KeyInput
 		
 		handler = new Handler();
-		hud = new HUD();
+		hud = new HUD(handler);
 		menu = new Menu(this,handler, hud);
 		this.addKeyListener(new KeyInput(handler,this));
 		this.addMouseListener(menu);
@@ -156,7 +156,7 @@ public class Game extends Canvas implements Runnable{
 			hud.render(g);
 			world.render(g);
 			handler.render(g);
-		}else if(gameState == STATE.Menu ) {
+		}else if(gameState == STATE.Menu || gameState == STATE.Stats || gameState == STATE.Options ) {
 			
 			menu.render(g);
 			

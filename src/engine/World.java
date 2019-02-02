@@ -53,16 +53,16 @@ public class World extends Canvas  {
     	cworld = new char[][]{
     		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
     		{'R','G','G','G','G','S','S','S','G','T','T','G','G','G','S','S','G','S','S','S','S','S','S','R'},
-    		{'R','G','G','G','G','C','S','G','G','S','T','T','T','G','T','S','G','G','T','G','S','S','G','R'},
+    		{'R','G','G','G','G','C','S','G','G','S','T','T','T','G','T','S','C','S','T','G','S','S','G','R'},
     		{'R','G','P','P','P','S','C','G','T','T','T','G','G','T','T','G','T','T','T','T','T','S','S','R'},
     		{'R','G','G','G','P','G','S','G','G','T','T','T','G','G','T','T','G','T','S','G','T','T','S','R'},
     		{'R','T','T','G','P','G','G','G','G','S','G','T','C','G','G','G','G','T','T','C','C','T','S','R'},
     		{'R','S','G','G','P','P','P','P','P','P','G','T','G','T','T','G','T','G','G','G','G','T','C','R'},
-    		{'R','S','S','T','G','G','G','G','S','P','G','G','G','G','T','G','C','G','S','G','C','T','T','R'},    	
+    		{'R','S','S','T','G','G','G','G','S','P','S','G','G','G','T','G','C','G','S','G','C','T','T','R'},    	
     		{'R','S','S','G','T','G','G','G','G','P','P','P','P','S','G','C','G','G','G','C','G','G','T','R'},
     		{'R','G','C','G','T','T','T','G','G','G','T','T','P','P','P','P','P','P','P','G','G','T','G','R'},
     		{'R','G','C','G','G','T','G','G','S','C','G','G','T','G','T','G','G','G','P','G','G','G','G','R'},
-    		{'R','T','T','C','G','G','C','G','G','G','S','G','G','T','T','G','G','G','P','T','G','G','G','R'},
+    		{'R','T','T','C','G','G','C','G','G','G','S','G','G','T','T','G','S','G','P','T','G','G','G','R'},
     		{'R','S','G','T','T','T','G','C','G','S','S','S','G','G','S','S','G','T','P','P','P','P','G','R'},
     		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
     		};
@@ -75,7 +75,7 @@ public class World extends Canvas  {
     public void tick() {
     	
     	/*TIMER TICK*/
-    	if(HUD.secondsPassed - startTimer >= 20)
+    	if(HUD.secondsPassed - startTimer >=  HUD.warrior_spawn_rate)
 		{
     		handler.addObject( new Enemy_Warrior( 3, 3, ID.Warrior, handler, 20, 12));
     		startTimer = HUD.secondsPassed;

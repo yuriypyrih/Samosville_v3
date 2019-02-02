@@ -18,8 +18,8 @@ public class PopUpEffect extends GameObject{
 	
 	private Handler handler;
 	
-	private float life;
-	private int whichWarning; // 0 = slashing , 1 = repearing your base 
+	private float life, appear_life;
+	private int whichWarning; // 0 = slashing , 1 = repearing your base  , 3 = pop up message
 	private int shift_y_position;
 	
 	private Image effect_img, secondary_effect_img;
@@ -60,6 +60,30 @@ public class PopUpEffect extends GameObject{
 		
 	}
 	
+	//PopUp Message
+	public PopUpEffect(int x, int y,String str_img, Handler handler) {
+		super(x, y, ID.PopUpEffect);
+		
+		this.x = x;
+		this.y = y;
+		this.whichWarning = 3;
+		
+		AudioPlayer.getSound("pop").play(1f,0.6f);
+		
+		alpha = 0.06f;
+		effect_img = new ImageIcon("res/" + str_img + ".png").getImage();
+			
+			
+			
+		
+		this.handler = handler;
+		life = 0.01f;
+		appear_life = 0.04f;
+		
+		
+		
+	}
+	
 	public PopUpEffect(GameObject object,int whichWarning, Handler handler) {
 		super(object.getX(), object.getY(), ID.PopUpEffect);
 		
@@ -83,7 +107,7 @@ public class PopUpEffect extends GameObject{
 		
 		/*SLASHs WARNING*/
 		if(whichWarning == 0) {
-			timer++;
+			
 			shift_y_position++;
 			if(singleWarning > 0) {
 				
@@ -98,7 +122,7 @@ public class PopUpEffect extends GameObject{
 		}
 		/*REPEAR CASTLE EFFECT*/
 		else if(whichWarning == 1) {
-			timer++;
+			
 			shift_y_position--;
 			if(singleWarning > 0) {
 				
@@ -111,19 +135,29 @@ public class PopUpEffect extends GameObject{
 			
 			}else handler.removeObject(this);
 		}
-		/*EXPLOSION FADE OUT EFFECT*/
-		else if(whichWarning == 2) {
+		/*POP UP MESSAGE EFFECT*/
+		else if(whichWarning == 3) {
 			
 			
-				if(singleWarning > 0) {
-					if(alpha >= 0.8 || alpha <= 0.01) {
-						singleWarning--;
-						life *= -1;
-					}
-					alpha += life ;
-					if(alpha >= 1) alpha = 1;
+			timer++;
+			
+			if(!fade_out) {
+
+				alpha += appear_life ;
+				if(alpha >= 1) {
+					alpha = 1;
+					fade_out = true;
+				}
+			}
+			else {
+				if(timer>260) {
+					
+					alpha -= life ;
+					if(alpha <= 0)  handler.removeObject(this);
 				
-				}else handler.removeObject(this);
+				}
+			}
+			
 			
 		}
 }
@@ -146,11 +180,11 @@ public class PopUpEffect extends GameObject{
 		
 		} 
 		else if(whichWarning == 3) {
-			g.drawImage(effect_img,(int)object.getX()-32,(int)object.getY()-32, null);
+			g.drawImage(effect_img,x,y, null);
 		
 		} 
 		else if(whichWarning == 6) {
-			g.drawImage(effect_img,(int)x-34,(int)y-34, null);
+			//g.drawImage(effect_img,(int)x-34,(int)y-34, null);
 		
 		} 
 		else {
