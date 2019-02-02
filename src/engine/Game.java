@@ -20,8 +20,8 @@ public class Game extends Canvas implements Runnable{
 	//private Random r; 
 	private HUD hud;//you may want to fix/delete this health bar later...
 	private Menu menu;
-	private Background_manager BG_manager;
 	private World world;
+	
 	
 	
 	
@@ -36,7 +36,6 @@ public class Game extends Canvas implements Runnable{
 		handler = new Handler();
 		hud = new HUD();
 		menu = new Menu(this,handler, hud);
-		BG_manager = new Background_manager(this);
 		this.addKeyListener(new KeyInput(handler,this));
 		this.addMouseListener(menu);
 		this.addMouseMotionListener(menu);
@@ -52,8 +51,12 @@ public class Game extends Canvas implements Runnable{
 		world = new World(player, handler);
 		
 	
+		 AudioPlayer.load(); 
+		 AudioPlayer.playMusic("background_music");
+		 
+		 new Window(WIDTH, HEIGHT,"Samosville",this);
+		 
 		
-		 new Window(WIDTH, HEIGHT,"Dodge Game",this);
 		 
 		 
 		
@@ -146,7 +149,7 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0,WIDTH,HEIGHT);
 		
-		BG_manager.render(g);
+		
 		handler.render(g);
 		
 		if(gameState == STATE.Game) {

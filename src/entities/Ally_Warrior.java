@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import engine.AudioPlayer;
 import engine.GameObject;
 import engine.HUD;
 import engine.Handler;
@@ -41,7 +42,7 @@ public class Ally_Warrior extends GameObject{
 		this.sentX = sentX;
 		this.sentY = sentY;
 		
-	
+		AudioPlayer.getSound("warrior_deploy").play(1f,0.6f);
 		
 	}
 	
@@ -55,6 +56,7 @@ public class Ally_Warrior extends GameObject{
 			/*HIT YOUR BASE*/
 			if ( x == sentX && y == sentY) {
 				
+				AudioPlayer.getSound("warrior_slash").play(1f,0.6f);
 				HUD.enemy_BASE -= 5;
 				handler.addObject(new PopUpEffect(20,100,0,handler));
 				handler.removeObject(this);

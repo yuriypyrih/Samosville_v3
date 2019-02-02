@@ -25,8 +25,8 @@ public class World extends Canvas  {
 
     private Image img_wall = new ImageIcon("res/Wall50.png").getImage();
     private Image enemy_base1_img = new ImageIcon("res/enemy_base150.png").getImage();
-    private Image enemy_base2_img = new ImageIcon("res/enemy_caste150_2.png").getImage();
-    private Image enemy_base3_img = new ImageIcon("res/enemy_castle150_3.png").getImage();
+    private Image enemy_base2_img = new ImageIcon("res/enemy_base150_2.png").getImage();
+    private Image enemy_base3_img = new ImageIcon("res/enemy_base150_3.png").getImage();
     private Image enemy_base_img = enemy_base1_img;
     
     private Image your_base1_img = new ImageIcon("res/base150.png").getImage();
@@ -34,9 +34,9 @@ public class World extends Canvas  {
     private Image your_base3_img = new ImageIcon("res/your_castle150_3.png").getImage();
     private Image your_base_img = your_base1_img;
     
-    private Image selected_filter_img = new ImageIcon("res/selected_filter.png").getImage();
-    private Image on_select_filter_img = new ImageIcon("res/on_select_filter.png").getImage();
-    private Image off_select_filter_img = new ImageIcon("res/off_select_filter.png").getImage();
+    private Image selected_filter_img = new ImageIcon("res/hover_filter.png").getImage();
+    private Image on_select_filter_img = new ImageIcon("res/can_select_filter.png").getImage();
+    private Image off_select_filter_img = new ImageIcon("res/cannot_select_filter.png").getImage();
 
     
     
@@ -52,18 +52,18 @@ public class World extends Canvas  {
     	
     	cworld = new char[][]{
     		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
-    		{'R','G','G','G','G','S','S','S','G','G','G','G','G','G','S','S','G','S','S','S','S','S','S','R'},
-    		{'R','G','G','G','G','G','S','G','G','G','T','T','T','G','T','S','G','G','T','G','S','S','G','R'},
-    		{'R','G','G','P','P','S','G','G','T','T','T','G','G','T','T','G','T','T','T','T','T','S','S','R'},
+    		{'R','G','G','G','G','S','S','S','G','T','T','G','G','G','S','S','G','S','S','S','S','S','S','R'},
+    		{'R','G','G','G','G','C','S','G','G','S','T','T','T','G','T','S','G','G','T','G','S','S','G','R'},
+    		{'R','G','P','P','P','S','C','G','T','T','T','G','G','T','T','G','T','T','T','T','T','S','S','R'},
     		{'R','G','G','G','P','G','S','G','G','T','T','T','G','G','T','T','G','T','S','G','T','T','S','R'},
     		{'R','T','T','G','P','G','G','G','G','S','G','T','C','G','G','G','G','T','T','C','C','T','S','R'},
-    		{'R','S','G','G','P','P','P','P','P','P','G','T','G','G','G','G','T','G','G','G','G','T','C','R'},
+    		{'R','S','G','G','P','P','P','P','P','P','G','T','G','T','T','G','T','G','G','G','G','T','C','R'},
     		{'R','S','S','T','G','G','G','G','S','P','G','G','G','G','T','G','C','G','S','G','C','T','T','R'},    	
-    		{'R','S','S','G','T','G','G','G','G','P','P','P','P','G','G','C','G','G','G','C','G','G','T','R'},
+    		{'R','S','S','G','T','G','G','G','G','P','P','P','P','S','G','C','G','G','G','C','G','G','T','R'},
     		{'R','G','C','G','T','T','T','G','G','G','T','T','P','P','P','P','P','P','P','G','G','T','G','R'},
     		{'R','G','C','G','G','T','G','G','S','C','G','G','T','G','T','G','G','G','P','G','G','G','G','R'},
-    		{'R','T','T','C','G','G','C','G','G','G','S','G','G','T','T','G','G','G','P','G','G','G','G','R'},
-    		{'R','G','G','T','T','T','G','C','G','S','S','S','G','G','S','S','G','G','P','P','P','P','G','R'},
+    		{'R','T','T','C','G','G','C','G','G','G','S','G','G','T','T','G','G','G','P','T','G','G','G','R'},
+    		{'R','S','G','T','T','T','G','C','G','S','S','S','G','G','S','S','G','T','P','P','P','P','G','R'},
     		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
     		};
         
@@ -75,7 +75,7 @@ public class World extends Canvas  {
     public void tick() {
     	
     	/*TIMER TICK*/
-    	if(HUD.secondsPassed - startTimer >= 10)
+    	if(HUD.secondsPassed - startTimer >= 20)
 		{
     		handler.addObject( new Enemy_Warrior( 3, 3, ID.Warrior, handler, 20, 12));
     		startTimer = HUD.secondsPassed;
@@ -96,7 +96,7 @@ public class World extends Canvas  {
     	if(HUD.enemy_BASE > 50) {
     		enemy_base_img = enemy_base1_img;
     	}
-    	else if(HUD.your_BASE > 10) {
+    	else if(HUD.enemy_BASE > 10) {
     		enemy_base_img = enemy_base2_img;
     	}
     	else {

@@ -16,6 +16,7 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 	private Game game;
 	private Handler handler;
 	private HUD hud;
+	private int hover_button = -1;
 	
 	
 	private Image menu_background_img = new ImageIcon("res/menu_background.png").getImage();
@@ -45,43 +46,43 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		if(game.gameState==STATE.Menu) {
 			
 			/*PLAY button*/
-			if(mouseOver(mx,my,200,400,100,40)) {
-				
+			if(mouseOver(mx,my,440,205,320,85)) {
+				AudioPlayer.getSound("click_menu").play(1f,0.6f);
 				game.gameState = STATE.Game;
 				hud.reset();
 				//background_img = dodge_menu_img;
 				
 			}
 			
-			/*Difficulty button*/
-			else if(mouseOver(mx,my,240,260,165,70)) {
-				
-				//game.gameState = STATE.Settings;
-				//background_img = dodge_menu_img;
-			
+			/*STATS button*/
+			else if(mouseOver(mx,my,440,305,320,85)) {
+				AudioPlayer.getSound("click_menu").play(1f,0.6f);
+				//game.gameState = STATE.Settings;	
 			}
 			
-			/*QUITE button*/
-			else if(mouseOver(mx,my,200,600,100,40)) {
+			/*OPTIONS button*/
+			else if(mouseOver(mx,my,440,408,320,85)) {
+				AudioPlayer.getSound("click_menu").play(1f,0.6f);
+				//game.gameState = STATE.Settings;
+			}
+			
+			/*EXIT button*/
+			else if(mouseOver(mx,my,440,508,320,85)) {
 				System.exit(1);
 			}
 		}
-		else if(mouseOver(mx,my,200,500,100,40)) {
 			
-			game.gameState = STATE.Menu;
-			//background_img = dodge_menu_img;
-		
-		}
+		else if(game.gameState == STATE.Pause) {
 			
-			
-		else if(game.gameState == STATE.Settings) {
-			
-			
+			 if(mouseOver(mx,my,200,500,100,40)) {
+				game.gameState = STATE.Menu;
+			}
+				
 			
 		}
 		
 		
-	}
+	}//mousePressed()
 	
 	
 	public void mouseReleassed(MouseEvent e) {
@@ -96,27 +97,25 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		if(game.gameState==STATE.Menu) {
 			
 			/*PLAY button*/
-			if(mouseOver(mx,my,220,130,195,82)) {
-			//	background_img = dodge_menu_play_img;
+			if(mouseOver(mx,my,440,205,320,85)) {
+				hover_button = 1;
 			}
-			/*Difficulty button*/
-			else if(mouseOver(mx,my,240,260,165,70)) {
-				//background_img = dodge_menu_options_img;
+			/*STATS button*/
+			else if(mouseOver(mx,my,440,305,320,85)) {
+				hover_button = 2;
 			}
-			/*QUITE button*/
-			else if(mouseOver(mx,my,260,375,130,57)) {
-				//background_img = dodge_menu_exit_img;
+			/*OPTIONS button*/
+			else if(mouseOver(mx,my,440,408,320,85)) {
+				hover_button = 3;
 			}
-			/*IF NOT THEN THE DEFAULT BACKGROUND*/
+			/*EXIT button*/
+			else if(mouseOver(mx,my,440,508,320,85)) {
+				hover_button = 4;
+			}
 			else {
-				//background_img = dodge_menu_img;
+				hover_button = -1;
 			}
 		}
-
-			
-			
-
-
 
 
 	
@@ -143,7 +142,8 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 				//	dodge_settings_img = dodge_settings_default;
 				}
 		}
-	else if(game.gameState==STATE.Pause) {
+	
+		else if(game.gameState==STATE.Pause) {
 	
 		/*RESUME BUTTON*/
 		if(mouseOver(mx,my,215, 175, 200, 65)) {
@@ -158,7 +158,6 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			//paused_img = paused_default_img;		
 			}
 		}
-	
 	
 	
 	else if(game.gameState==STATE.End) {
@@ -178,7 +177,7 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		}
 		
 		
-	}
+	}//mouseMoved()
 	
 	
 	
@@ -207,15 +206,39 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		
 		if(game.gameState==STATE.Menu) {
 				
+			
 			g.drawImage(background_img,0,0,null);
-			g.drawRect(200,400,100,40);
-			g.drawString("Game", 200,400);
 			
-			g.drawRect(200,500,100,40);
-			g.drawString("Options", 200,500);
 			
-			g.drawRect(200,600,100,40);
-			g.drawString("Exit", 200,600);
+			if(hover_button == 1) {
+				//Player Button
+				g.drawRect(440,205,320,85);
+			}
+			else if(hover_button == 2) {
+				//STATS
+				g.drawRect(440,305,320,85);
+			}
+			else if(hover_button == 3) {
+				//OPTIONS
+				g.drawRect(440,408,320,85);
+			}
+			else if(hover_button == 4) {
+				//EXIT
+				g.drawRect(440,508,320,85);
+			}
+			// hover_button == -1
+			else {
+				//Do Nothing, do not highlight anything
+			}
+			
+			
+			
+			
+
+			
+			
+			
+			
 		}
 		else if(game.gameState==STATE.Pause) {
 			System.out.println("works");

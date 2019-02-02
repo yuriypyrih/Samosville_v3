@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import org.newdawn.slick.Sound;
+
 import entities.*;
 
 public  class PlayerInput {
@@ -70,37 +72,44 @@ public  class PlayerInput {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			
-			
-			/*CREATE WORKERS BUTTON*/
-			if(mouseOver(mx,my,795, 705, 390, 41) && HUD.stone > 1 && HUD.food >=2) {
-				HUD.food -= 2;
-				HUD.stone -= 1;
-				HUD.workers += 1;
-			}
-			/*SENT WORKER BUTTON*/
-			else if(mouseOver(mx,my,795, 754, 390, 41) && HUD.workers > 0) {
-				/*Workers have internal structure*/
-				HUD.SELECT_RESOURCE = true;
-			}
-			/*DEPLOY WARRIOR BUTTON*/
-			else if(mouseOver(mx,my,795, 802, 390, 41) && HUD.food >= 1 && HUD.wood >= 1 && HUD.stone >= 3) {
-				HUD.food -= 1;
-				HUD.wood -= 1;
-				HUD.stone -= 3;
+			if(Game.gameState == STATE.Game) {
 				
-				handler.addObject( new Ally_Warrior( 20, 12, ID.Warrior, handler, 3, 3));
+				/*CREATE WORKERS BUTTON*/
+				if(mouseOver(mx,my,795, 705, 390, 41) && HUD.stone >= 1 && HUD.food >=2) {
+					AudioPlayer.getSound("create_worker").play(1f,0.6f);
+					HUD.food -= 2;
+					HUD.stone -= 1;
+					HUD.available_workers += 1;
+					HUD.created_workers += 1;
+				}
+				/*SENT WORKER BUTTON*/
+				else if(mouseOver(mx,my,795, 754, 390, 41) && HUD.available_workers > 0) {
+					/*Workers have internal structure*/
+					HUD.SELECT_RESOURCE = true;
+				}
+				/*DEPLOY WARRIOR BUTTON*/
+				else if(mouseOver(mx,my,795, 802, 390, 41) && HUD.food >= 1 && HUD.wood >= 1 && HUD.stone >= 3) {
+					HUD.food -= 1;
+					HUD.wood -= 1;
+					HUD.stone -= 3;
+					
+					handler.addObject( new Ally_Warrior( 20, 12, ID.Warrior, handler, 3, 3));
+					
+				}
+				/*REPAIR CASTLE BUTTON*/
+				else if(mouseOver(mx,my,677, 708, 107, 138) && HUD.wood >= 2 && HUD.stone >= 5) {
+					
+					AudioPlayer.getSound("repear_castle").play(1f,0.6f);
+					handler.addObject(new PopUpEffect(1000, 550, 1, handler));
+					HUD.wood -= 2;
+					HUD.stone -= 5;
+					HUD.your_BASE += 20;
+				}
 				
-			}
-			/*REPAIR CASTLE BUTTON*/
-			else if(mouseOver(mx,my,677, 708, 107, 138) && HUD.wood >= 2 && HUD.stone >= 5) {
-				HUD.wood -= 2;
-				HUD.stone -= 5;
-				HUD.your_BASE += 20;
-			}
-			
-			if(HUD.SELECT_RESOURCE == true && availableMaterial()) {
-				handler.addObject(new Worker(20, 12, ID.Worker, handler, mx, my));
-				HUD.SELECT_RESOURCE = false;
+				if(HUD.SELECT_RESOURCE == true && availableMaterial()) {
+					handler.addObject(new Worker(20, 12, ID.Worker, handler, mx, my));
+					HUD.SELECT_RESOURCE = false;
+				}
 			}
 			
 		}
@@ -168,7 +177,7 @@ public  class PlayerInput {
 	
 	private boolean mouseInsideMap()
 	{
-		return mouseOver(mx,my, 1 * 50, 1 *50 , 21 * 50 , 12 *50);
+		return mouseOver(mx,my, 1 * 50, 1 *50 , 22 * 50 , 12 *50);
 	}
 	
 	

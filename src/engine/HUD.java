@@ -18,11 +18,11 @@ public class HUD {
 	public static int your_BASE = 100;
 	public static int enemy_BASE = 100;
 	
-	public static int workers = 1;
-	public static int warriors = 0;
-	public static int food = 0;
-	public static int wood = 0;
-	public static int stone = 0;
+	public static int available_workers = 1;
+	public static int created_workers = 1;
+	public static int food = 1;
+	public static int wood = 1;
+	public static int stone = 2;
 	
 	
 	public static boolean SELECT_RESOURCE = false;
@@ -119,7 +119,7 @@ public class HUD {
 		if(SELECT_RESOURCE == true) {
 			graphics2.setColor(Color.YELLOW);
 		}
-		else if(workers>0) {
+		else if(available_workers >0) {
 			graphics2.setColor(Color.GREEN);
 		}
 		graphics2.drawRect(795, 754, 390, 41);
@@ -145,16 +145,16 @@ public class HUD {
 		Font f = new Font ("Monospaced", Font.BOLD | Font.ITALIC, 18);
 	    g.setFont (f);
 		
-		graphics2.drawString( secondsPassed + "sec", 325, 750);
+		graphics2.drawString( secondsPassed + "sec", 280, 755);
 		graphics2.drawString("" + food, 115, 747);
 		graphics2.drawString("" + wood, 118, 780);
 		graphics2.drawString("" + stone,120, 815);
-		graphics2.drawString("" + workers, 340, 810);
+		graphics2.drawString(available_workers + "/" + created_workers, 305, 810);
 		
 		graphics2.setColor(Color.GREEN);
-		graphics2.drawString("" + your_BASE,533, 763);
+		graphics2.drawString("" + your_BASE,511, 750);
 		graphics2.setColor(Color.RED);
-		graphics2.drawString("" + enemy_BASE, 549, 823);
+		graphics2.drawString("" + enemy_BASE, 527, 808);
 		
 	}
 	

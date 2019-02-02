@@ -19,7 +19,7 @@ public class PopUpEffect extends GameObject{
 	private Handler handler;
 	
 	private float life;
-	private int whichWarning; // 0 = slashing your base, 1 = slashing enemy base 
+	private int whichWarning; // 0 = slashing , 1 = repearing your base 
 	private int shift_y_position;
 	
 	private Image effect_img, secondary_effect_img;
@@ -46,8 +46,10 @@ public class PopUpEffect extends GameObject{
 				
 				alpha = 0.06f;
 			}else if(whichWarning == 1) {
-				effect_img = new ImageIcon("res/game_over_red.png").getImage();
-				alpha = 1;
+				effect_img = new ImageIcon("res/plus20.png").getImage();
+				shift_y_position = y;
+				
+				alpha = 0.06f;
 			}
 			
 		
@@ -84,7 +86,7 @@ public class PopUpEffect extends GameObject{
 			timer++;
 			shift_y_position++;
 			if(singleWarning > 0) {
-				//if(timer == 10) AudioPlayer.getSound("sound_warning").play(0.8f,0.6f);
+				
 				if(alpha >= 0.8 || alpha <= 0.01) {
 					singleWarning--;
 					life *= -1;
@@ -94,10 +96,19 @@ public class PopUpEffect extends GameObject{
 			
 			}else handler.removeObject(this);
 		}
-		/*GAME OVER EFFECT*/
+		/*REPEAR CASTLE EFFECT*/
 		else if(whichWarning == 1) {
-			if(alpha >life) {
-				alpha -= (life - 0.045f) ;
+			timer++;
+			shift_y_position--;
+			if(singleWarning > 0) {
+				
+				if(alpha >= 0.8 || alpha <= 0.01) {
+					singleWarning--;
+					life *= -1;
+				}
+				alpha += life ;
+				if(alpha >= 1) alpha = 1;
+			
 			}else handler.removeObject(this);
 		}
 		/*EXPLOSION FADE OUT EFFECT*/
@@ -115,75 +126,9 @@ public class PopUpEffect extends GameObject{
 				}else handler.removeObject(this);
 			
 		}
-		/*WARNING EFFECT ICON*/
-		else if(whichWarning == 3) {
-			
-			if(tripleWarning > 0) {
-				if(alpha >= 0.8 || alpha <= 0.01) {
-					tripleWarning--;
-					life *= -1;
-				}
-				alpha += life ;
-				if(alpha >= 1) alpha = 1;
-			
-			}else handler.removeObject(this);
-
-		}
-		/*POISONED EFFECT*/
-		else if(whichWarning == 4) {
-			
-			if(tripleWarning > 0) {
-				if(alpha >= 0.8 || alpha <= 0.01) {
-					tripleWarning--;
-					life *= -1;
-				}
-				alpha += life ;
-				if(alpha >= 1) alpha = 1;
-			
-			}else handler.removeObject(this);
-
-		}
-		/*SCARY FACE SWAP EFFECT*/
-		else if(whichWarning == 5) {
-			timer++;
-			
-			if(timer>50) {
-				
-				alpha -= life ;
-				if(alpha <= 0)  handler.removeObject(this);
-			
-			}
-
-		}
+}
 		
-		/*DEATHTRAP EFFECT*/
-		if(whichWarning == 6) {
-			timer++;
-			
-			if(timer<20 && alpha <= 0.9) {
-				alpha += life;
-			}
-			if(timer>20){
-				alpha -= life ;
-				if(alpha <= 0)  handler.removeObject(this);
-			
-			}
-		}
-		
-		/*THUNDER EFFECT*/
-		else if(whichWarning == 7) {
-			timer++;
-			
-			if(timer>5) {
-				
-				alpha -= life ;
-				if(alpha <= 0)  handler.removeObject(this);
-			
-			}
-
-		}
-		
-	}
+	
 	
 	public void render(Graphics g) {
 		
@@ -193,6 +138,11 @@ public class PopUpEffect extends GameObject{
 		if(whichWarning == 0) {
 			g.drawImage(effect_img, x, y, null);
 			g.drawImage(secondary_effect_img, x,shift_y_position, null);
+		
+		} 
+		else if(whichWarning == 1) {
+			g.drawImage(effect_img, x, shift_y_position, null);
+			
 		
 		} 
 		else if(whichWarning == 3) {

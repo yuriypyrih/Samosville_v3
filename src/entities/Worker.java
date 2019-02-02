@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import engine.AudioPlayer;
 import engine.GameObject;
 import engine.HUD;
 import engine.Handler;
@@ -39,12 +40,16 @@ public class Worker extends GameObject{
 	private Image worker_right_img6 = new ImageIcon("res/run_left_6.png").getImage();
 	private Image worker_right_img7 = new ImageIcon("res/run_left_7.png").getImage();
 	private Image worker_right_img8 = new ImageIcon("res/run_left_8.png").getImage();
+	
+	private Image worker_select_filter = new ImageIcon("res/worker_select_filter.png").getImage();
 
 	public Worker(int x, int y, ID id, Handler handler, int sentX, int sentY) {
 		super(x, y, id);
 		startTimer = HUD.secondsPassed;
 		
 		this.handler = handler;
+		
+		AudioPlayer.getSound("send_worker").play(1f,0.8f);
 		
 		for(int x_ = 0 ; x_ <= 24 ; x_++) {
 			if(sentX >= x_  * 50 && sentX < x_ * 50 + 50) {
@@ -62,7 +67,7 @@ public class Worker extends GameObject{
 		this.sentX = sentX;
 		this.sentY = sentY;
 		
-		HUD.workers--;
+		HUD.available_workers--;
 		
 	}
 	
@@ -93,7 +98,7 @@ public class Worker extends GameObject{
 				if(job_is_done) {
 					
 					HUD.updateMaterial(holdingMaterial);
-					HUD.workers++;
+					HUD.available_workers++;
 					handler.removeObject(this);
 				}
 				holdingMaterial = HUD.consumeMaterial(this);
@@ -170,6 +175,10 @@ public class Worker extends GameObject{
 			}
 		}
 		
-	}
+		if(!job_is_done) {
+			g.drawImage(worker_select_filter, sentX * 50, sentY * 50, null);
+		}
+		
+	}//end of render()
 
 }//end of Worker class
