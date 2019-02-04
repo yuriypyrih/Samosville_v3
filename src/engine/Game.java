@@ -27,6 +27,7 @@ public class Game extends Canvas implements Runnable{
 	
 	
 	public static STATE  gameState = STATE.Menu;
+	private STATE previous_state = gameState;
 	
 	//Contructor fot the Game class
 	public Game() {
@@ -120,18 +121,19 @@ public class Game extends Canvas implements Runnable{
 	
 		if(gameState== STATE.Game) {
 			
-			
 			hud.tick();
 			world.tick();
-			handler.tick();
-			
-				
-			
+			handler.tick();	
 			
 		}else if(gameState == STATE.Menu ) {
 			handler.tick();
 			menu.tick();
+		}
 		
+		if(previous_state != gameState) {
+			menu.clear_hover_button();
+			previous_state = gameState;
+			
 		}
 
 	}

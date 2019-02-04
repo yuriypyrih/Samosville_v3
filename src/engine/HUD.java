@@ -18,7 +18,7 @@ public class HUD {
 	
 	
 
-	private final static int YOUR_BASE = 5;
+	private final static int YOUR_BASE = 100;
 	private final static int ENEMY_BASE = 100;
 	private final static int CREATED_WORKERS = 1;
 	private final static int AVAILABLE_WORKERS = 1;
@@ -26,6 +26,11 @@ public class HUD {
 	private final static int WOOD = 1;
 	private final static int STONE = 2;
 	private final static int WARRIOR_SPAWN_RATE = 20;
+	
+	
+	public static String username = "Anon";
+	public static int Best_Time = 0;
+	public static boolean New_best_time = false;
 	
 	
 	
@@ -124,6 +129,12 @@ public class HUD {
 			Game.gameState = STATE.Defeat;
 		}
 		else if(enemy_BASE <= 0 && !game_finished) {
+			
+			if(Best_Time < secondsPassed) {
+				Best_Time = secondsPassed;
+				New_best_time = true;
+			}
+			
 			AudioPlayer.getSound("victory").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
 			game_finished = true;
 			Game.gameState = STATE.Victory;
@@ -240,9 +251,13 @@ public class HUD {
 		stone = STONE;                          
 		warrior_spawn_rate = WARRIOR_SPAWN_RATE;
 		
+		New_best_time = false;
 		game_finished = false;
 		
 		handler.clearGame();
+		
+		World.resetWorld();
+		
 	}
 	
 	

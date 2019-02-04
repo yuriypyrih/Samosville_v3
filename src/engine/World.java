@@ -16,7 +16,10 @@ public class World extends Canvas  {
 	
 	private PlayerInput player;
 	private Handler handler;
-	public static char[][] cworld ;
+	
+	
+	
+	
 	private int startTimer;
    
     private Image  img_grass = new ImageIcon("res/Grass50.png").getImage();
@@ -37,9 +40,27 @@ public class World extends Canvas  {
     private Image selected_filter_img = new ImageIcon("res/hover_filter.png").getImage();
     private Image on_select_filter_img = new ImageIcon("res/can_select_filter.png").getImage();
     private Image off_select_filter_img = new ImageIcon("res/cannot_select_filter.png").getImage();
+    
+    
+    public static char[][] cworld = new char[14][24];
 
-    
-    
+		
+    public final static char[][] WORLD_MAP = new char[][]{
+  		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
+  		{'R','G','G','G','G','S','S','S','G','T','T','G','G','G','S','S','G','S','S','S','S','S','S','R'},
+  		{'R','G','G','G','G','C','S','G','G','S','T','T','T','G','T','S','C','S','T','G','S','S','G','R'},
+  		{'R','G','P','P','P','S','C','G','T','T','T','G','G','T','T','G','T','T','T','T','T','S','S','R'},
+  		{'R','G','G','G','P','G','S','G','G','T','T','T','G','G','T','T','G','T','S','G','T','T','S','R'},
+  		{'R','T','T','G','P','G','G','G','G','S','G','T','C','G','G','G','G','T','T','C','C','T','S','R'},
+  		{'R','S','G','G','P','P','P','P','P','P','G','T','G','T','T','G','T','G','G','G','G','T','C','R'},
+  		{'R','S','S','T','G','G','G','G','S','P','S','G','G','G','T','G','C','G','S','G','C','T','T','R'},    	
+  		{'R','S','S','G','T','G','G','G','G','P','P','P','P','S','G','C','G','G','G','C','G','G','T','R'},
+  		{'R','G','C','G','T','T','T','G','G','G','T','T','P','P','P','P','P','P','P','G','G','T','G','R'},
+  		{'R','G','C','G','G','T','G','G','S','C','G','G','T','G','T','G','G','G','P','G','G','G','G','R'},
+  		{'R','T','T','C','G','G','C','G','G','G','S','G','G','T','T','G','S','G','P','T','G','G','G','R'},
+  		{'R','S','G','T','T','T','G','C','G','S','S','S','G','G','S','S','G','T','P','P','P','P','G','R'},
+  		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
+  		};
  
    
    
@@ -49,25 +70,21 @@ public class World extends Canvas  {
     	this.player = player;
     	this.handler = handler;
     	startTimer = HUD.secondsPassed;
-    	
-    	cworld = new char[][]{
-    		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
-    		{'R','G','G','G','G','S','S','S','G','T','T','G','G','G','S','S','G','S','S','S','S','S','S','R'},
-    		{'R','G','G','G','G','C','S','G','G','S','T','T','T','G','T','S','C','S','T','G','S','S','G','R'},
-    		{'R','G','P','P','P','S','C','G','T','T','T','G','G','T','T','G','T','T','T','T','T','S','S','R'},
-    		{'R','G','G','G','P','G','S','G','G','T','T','T','G','G','T','T','G','T','S','G','T','T','S','R'},
-    		{'R','T','T','G','P','G','G','G','G','S','G','T','C','G','G','G','G','T','T','C','C','T','S','R'},
-    		{'R','S','G','G','P','P','P','P','P','P','G','T','G','T','T','G','T','G','G','G','G','T','C','R'},
-    		{'R','S','S','T','G','G','G','G','S','P','S','G','G','G','T','G','C','G','S','G','C','T','T','R'},    	
-    		{'R','S','S','G','T','G','G','G','G','P','P','P','P','S','G','C','G','G','G','C','G','G','T','R'},
-    		{'R','G','C','G','T','T','T','G','G','G','T','T','P','P','P','P','P','P','P','G','G','T','G','R'},
-    		{'R','G','C','G','G','T','G','G','S','C','G','G','T','G','T','G','G','G','P','G','G','G','G','R'},
-    		{'R','T','T','C','G','G','C','G','G','G','S','G','G','T','T','G','S','G','P','T','G','G','G','R'},
-    		{'R','S','G','T','T','T','G','C','G','S','S','S','G','G','S','S','G','T','P','P','P','P','G','R'},
-    		{'R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R','R'},
-    		};
+    	  
+    		resetWorld();
         
     }
+    
+    
+    public static void resetWorld() {
+    	
+    	for( int i = 0; i < 24; i ++) {
+    		for(int j = 0; j < 14 ; j++) {
+    			cworld[j][i] = WORLD_MAP[j][i];
+    		}
+    	}
+    }
+    
     
     public static void changeTile(int x, int y, char Type) {
     	cworld[y][x] = Type;

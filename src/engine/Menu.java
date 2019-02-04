@@ -18,12 +18,15 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 	private HUD hud;
 	private int hover_button = -1;
 	
+
+	
 	
 	private Image menu_background_img = new ImageIcon("res/menu_background.png").getImage();
 	private Image menu_stats_img = new ImageIcon("res/menu_stats.png").getImage();
 	private Image menu_options_img = new ImageIcon("res/menu_options.png").getImage();
 	private Image pause_filter_img = new ImageIcon("res/pause_filter.png").getImage();
-	private Image victory_filter_img = new ImageIcon("res/victory_filter.png").getImage();
+	private Image menu_victory_img = new ImageIcon("res/menu_victory.png").getImage();
+	private Image menu_victory_filter_img = new ImageIcon("res/menu_victory_filter.png").getImage();
 	private Image defeat_filter_img = new ImageIcon("res/defeat_filter.png").getImage();
 	
 	private Image background_img = menu_background_img;
@@ -37,6 +40,7 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		this.handler = handler;
 		this.hud = hud;
 		
+	
 		
 	}
 	
@@ -76,6 +80,15 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 				System.exit(1);
 			}
 		}
+		else if(game.gameState == STATE.Stats) {
+			
+			/*Back button*/
+			 if(mouseOver(mx,my,828,764,322,84)) {
+				AudioPlayer.getSound("click_menu").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
+				Game.gameState = STATE.Menu;
+			}
+			
+		}
 		else if(game.gameState == STATE.Options) {
 			/*Music Volume button*/
 			if(mouseOver(mx,my,265,305,653,85)) {
@@ -114,9 +127,38 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 					AudioPlayer.getSound("click_menu").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
 					Game.gameState = STATE.Menu;
 
-				}
-				
+				}		
 			
+		}//end of if(Pause)
+		
+		else if(game.gameState==STATE.Victory) {
+			
+			
+			/*EXIT button*/
+			if(mouseOver(mx,my,448,415,320,85)) {
+				AudioPlayer.getSound("click_menu").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
+				Game.gameState = STATE.Menu;
+
+			}		
+		
+		}
+		
+		else if(game.gameState==STATE.Defeat) {
+			
+			/*Reset/ Try again button*/
+			 if(mouseOver(mx,my,448,300,320,85)) {
+				AudioPlayer.getSound("click_menu").play(1f ,0.6f * AudioPlayer.sound_solume_multiplier);
+				hud.reset();
+				Game.gameState = STATE.Game;
+
+			}
+			/*QUIT button*/
+			else if(mouseOver(mx,my,448,415,320,85)) {
+				AudioPlayer.getSound("click_menu").play(1f,0.6f * AudioPlayer.sound_solume_multiplier);
+				Game.gameState = STATE.Menu;
+
+			}			
+		
 		}
 		
 		
@@ -154,6 +196,17 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 				hover_button = -1;
 			}
 		}
+		
+		else if(game.gameState==STATE.Stats) {
+			
+			//BACK BUTTON
+			 if(mouseOver(mx,my,828,764,322,84)) {
+				hover_button = 1;
+			}
+			else {
+				hover_button = -1;
+			}
+	}
 
 
 	
@@ -197,7 +250,36 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 				hover_button = -1;
 			
 			}
-		}
+		}//end of if(Pause)
+		else if(game.gameState==STATE.Victory) {
+			
+			
+			/*EXIT button*/
+			if(mouseOver(mx,my,448,415,320,85)) {
+				hover_button = 1;
+
+			}		
+			else {
+				hover_button = -1;
+			}
+		
+		}//end of if(Victory)
+		
+		else if(game.gameState==STATE.Defeat) {
+			
+			/*Reset/ Try again button*/
+			 if(mouseOver(mx,my,448,300,320,85)) {
+				 hover_button = 1;
+			}
+			/*QUIT button*/
+			else if(mouseOver(mx,my,448,435,320,85)) {
+				hover_button = 2;
+			}	
+			else {
+				hover_button = -1;
+			}
+		
+		}//end of if(Defeat)
 	
 
 		
@@ -218,7 +300,12 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		}else return false;
 	}
 	
+	public void clear_hover_button() {
+		hover_button = -1;
+	}
+	
 	public void tick() {
+		
 		
 		
 	}
@@ -262,9 +349,19 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 			
 			g.drawImage(menu_stats_img,0,0,null);
 			
-			 if(hover_button == 3) {
-				//QUIT BUTTON
-				g.drawRect(448,435,320,85);
+			g.setColor(Color.BLACK);
+			Font f = new Font ("Monospaced", Font.BOLD | Font.ITALIC, 48);
+		    g.setFont (f);
+			
+			g.drawString(hud.username, 280, 240);
+			
+			g.drawString(hud.Best_Time + " sec", 340, 340);
+			
+			g.setColor(Color.WHITE);
+			
+			 if(hover_button == 1) {
+				//BACK BUTTON
+				 g.drawRect(828,764,322,84);
 			}
 			// hover_button == -1
 			else {
@@ -332,10 +429,38 @@ public class Menu extends MouseAdapter implements MouseMotionListener {
 		}//end of if(Pause)
 		
 		else if(game.gameState==STATE.Victory) {
-			g.drawImage(victory_filter_img,0,0,null);
+			g.drawImage(menu_victory_img,0,0,null);
+			
+			if(hud.New_best_time == true) {
+				g.drawImage(menu_victory_filter_img,0,0,null);
+
+			}
+			
+			g.setColor(Color.BLACK);
+			Font f = new Font ("Monospaced", Font.BOLD | Font.ITALIC, 48);
+		    g.setFont (f);
+			
+			g.drawString(hud.Best_Time + " sec ", 620, 360);
+			
+			g.setColor(Color.WHITE);
+			//Exit button
+			if(hover_button == 1) {
+				g.drawRect(448,415,320,85);
+			}
+			
+			
 		}
 		else if(game.gameState==STATE.Defeat) {
 			g.drawImage(defeat_filter_img,0,0,null);
+			
+			//Try again Button
+			if(hover_button == 1) {
+				g.drawRect(448,300,320,85);
+			}
+			//Quit Button
+			else if(hover_button == 2) {
+				g.drawRect(448,415,320,85);
+			}
 		}
 		
 	}

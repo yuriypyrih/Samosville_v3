@@ -67,6 +67,9 @@ public class KeyInput extends KeyAdapter{
 			else if(game.gameState == STATE.Menu) {
 				System.exit(1);
 			}
+			else if(game.gameState == STATE.Victory || game.gameState == STATE.Defeat) {
+				game.gameState = STATE.Menu;
+			}
 		}
 		
 	}//end of keyReleased Method
